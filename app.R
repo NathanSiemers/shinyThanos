@@ -1,14 +1,14 @@
 library(shiny)
-library(shinyjs)
-library(tidyverse)
+library(dplyr)  ## only needed for storms data set I think..
+library(purrr)
 ################################################################
 source('thanos.R')
 ## thanos default variables to set
-## thanos_data_list can be one or more data frames and matrices
+## thanos_data_list can be one or more data frames and matrices in register
 thanos_data_list = list ( as.data.frame(storms) )
 thanos_default_selected = c('category', 'lat', 'long')
 thanos_width = '50%'
-thanos_height = 200
+thanos_height = 100
 ################################################################
 ## ui
 ui <- fluidPage(
@@ -36,12 +36,12 @@ server <- function(input, output, session) {
             dupnumber = 5; dupnames = unlist(lapply(input$selectthings, function(x){ rep(x, dupnumber) } ) );
             dupcounts = rep(1:dupnumber, length( input$selectthings ) )
             map2(dupnames, dupcounts, ~ ui_filters(
-                get_variable_in_data_list( thanos_data_list, .x ),
-                isolate(input[[.x]]),
-                .x,
-                .y,
-                thanos_width,
-                thanos_height
+                x = get_variable_in_data_list( thanos_data_list, .x ),
+                selectedvals = isolate(input[[.x]]),
+                var = .x,
+                picket = .y,
+                width = thanos_width,
+                height = thanos_height
                 ) ) }) })
     observe({ map( input$selectthings, ~ input[[.x]] )
               thanos_histos(input, output, session, data_list = thanos_data_list,
@@ -62,5 +62,4 @@ server <- function(input, output, session) {
         print(str(reactiveValuesToList(input)))
     })
 }
-
 shinyApp(ui, server)

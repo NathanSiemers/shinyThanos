@@ -3,6 +3,7 @@
 ################################################################
 ## this code plus a map creates all the dynamic filters
 library(viridis)  ## histogram plotter needs these colors
+library(ggplot2)
 
 theme_thanos = theme(axis.text.x = element_text(size = 12),  ####, angle = 30, hjust = 10)
     axis.text.y = element_text(size = 9),
