@@ -52,14 +52,9 @@ server <- function(input, output, session) {
     output$data <- renderTable(head(thanos_data_list[[1]][  reduce(selected(), `&`) , ], 12))
     output$data_summary = renderPrint({
         slct = reduce(selected(), `&`)
-        print("Original Data:")
-        print(dim(storms))
-        print("Thanos Result:")
-        print(length(which( slct )))
-        print("Selected:")
-        print(str( selected() ) )
-        print(table(slct))
-        print(str(reactiveValuesToList(input)))
+        print(c( "Original Data:", dim(storms), '</br>', "Thanos Result:", length(which( slct )), '</br>',
+                "Selected:", capture.output(str( selected() )), '</br>', table(slct), '</br>',
+                capture.output(str(reactiveValuesToList(input)))   ))
     })
 }
 shinyApp(ui, server)
