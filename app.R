@@ -49,11 +49,11 @@ server <- function(input, output, session) {
     ################################################################
     ## not needed for thanos proper
     ## print out example filtered table, debugging information
-    output$data <- renderTable(head(thanos_data_list[[1]][  reduce(selected(), `&`) , ], 12))
+    output$data <- renderTable(head(thanos_data_list[[1]][  reduce(selected(), `&`) , ], 30))
     output$data_summary = renderPrint({
         slct = reduce(selected(), `&`)
         print(c( "Original Data:", dim(storms), '</br>', "Thanos Result:", length(which( slct )), '</br>',
-                "Selected:", capture.output(str( selected() )), '</br>', table(slct), '</br>',
+                "Selected:", capture.output(str( selected() )), '</br></br>', capture.output(table(slct)), '</br>',
                 capture.output(str(reactiveValuesToList(input)))   ))
     })
 }
