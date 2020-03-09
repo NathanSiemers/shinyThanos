@@ -6,8 +6,8 @@ source('thanos.R')
 ## thanos default variables to set
 ## thanos_data_list can be one or more data frames and matrices in register
 thanos_data_list = list ( as.data.frame(storms) )
-thanos_default_selected = c('category', 'lat', 'long')
-thanos_width = '50%'
+thanos_default_selected = c('status', 'category', 'lat', 'long')
+thanos_width = '85%'
 thanos_height = 100
 ################################################################
 ## ui
